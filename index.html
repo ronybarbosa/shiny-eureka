@@ -1,0 +1,145 @@
+<html>
+  <head>
+    <title>CX Test Store</title>
+    <script type="text/javascript">
+      adroll_adv_id = "QD2EF66B6RCFVPAEQJX73D";
+      adroll_pix_id = "4OG2HYHOVJC3VEXFPY6D6H";
+      adroll_version = "2.0";
+
+      (function (w, d, e, o, a) {
+        w.__adroll_loaded = true;
+        w.adroll = w.adroll || [];
+        w.adroll.f = ["setProperties", "identify", "track"];
+        var roundtripUrl =
+          "https://s.adroll.com/j/" + adroll_adv_id + "/roundtrip.js";
+        for (a = 0; a < w.adroll.f.length; a++) {
+          w.adroll[w.adroll.f[a]] =
+            w.adroll[w.adroll.f[a]] ||
+            (function (n) {
+              return function () {
+                w.adroll.push([n, arguments]);
+              };
+            })(w.adroll.f[a]);
+        }
+
+        e = d.createElement("script");
+        o = d.getElementsByTagName("script")[0];
+        e.async = 1;
+        e.src = roundtripUrl;
+        o.parentNode.insertBefore(e, o);
+      })(window, document);
+      adroll.track("pageView");
+    </script>
+    <script type="text/javascript"> adroll_adv_id = "EY4ATQAVXNCRBFNCOHZKNE"; adroll_pix_id = "ZYTZAFJASVC47FKW3ASE2I"; adroll_version = "2.0";  (function(w, d, e, o, a) { w.__adroll_loaded = true; w.adroll = w.adroll || []; w.adroll.f = [ 'setProperties', 'identify', 'track', 'identify_email', 'get_cookie' ]; var roundtripUrl = "https://s.adroll.com/j/" + adroll_adv_id + "/roundtrip.js"; for (a = 0; a < w.adroll.f.length; a++) { w.adroll[w.adroll.f[a]] = w.adroll[w.adroll.f[a]] || (function(n) { return function() { w.adroll.push([ n, arguments ]) } })(w.adroll.f[a]) }  e = d.createElement('script'); o = d.getElementsByTagName('script')[0]; e.async = 1; e.src = roundtripUrl; o.parentNode.insertBefore(e, o); })(window, document); adroll.track("pageView"); </script> 
+  </head>
+  <body>
+    <h2>Test store</h2>
+    <ul>
+      <li><a href="products/plushie.html">View test product - Event: ProductView</a></li>
+      <li><a href="cart">Cart - Event: AddToCart</a></li>
+      <li><a href="thank-you.html">View thank you page - Event: PlacedOrder</a></li>
+    </ul>
+
+    <!-- Contact capture form used to manually test Pixel Assistant -->
+    <h3>Mock Contact Capture Form – with Navigation</h3>
+    <form
+      id="contact_capture_form_navigation"
+      style="border: 1px solid gray; padding: 0 24px 12px 24px; margin: 24px 0;"
+    >
+      <p>
+        <label for="name">Name</label>
+        <input type="text" id="ccf_nav_form_name" name="ccf_nav_form_name" placeholder="Your name...">
+      </p>
+      <p>
+        <label for="email">Email</label>
+        <input type="email" id="ccf_nav_form_email" name="ccf_nav_form_email" placeholder="Your email...">
+      </p>
+      <p>
+        <input type="checkbox" id="ccf_nav_form_marketing_consent" name="ccf_nav_form_marketing_consent" />
+        <label for="marketing_consent">I <em>consent</em> to receiving marketing stuff from the CX Text Store</label>
+      </p>
+      <p>
+        <input type="submit">
+      </p>
+    </form>
+
+    <script type="text/javascript">
+      // Indicate in the form that the values have been collected
+      const urlParams = new URLSearchParams(window.location.search);
+      const formName = urlParams.get('ccf_nav_form_name');
+      const formEmail = urlParams.get('ccf_nav_form_email');
+      const formMarketingConsent = urlParams.get('ccf_nav_form_marketing_consent');
+      if (formName || formEmail || formMarketingConsent) {
+        const feedback = document.createElement('span');
+        feedback.id = 'ccf_nav_form_feedback';
+        feedback.style.color = 'green';
+        feedback.style.marginLeft = '1em';
+        feedback.innerHTML = '✅ Collected';
+
+        const submitButton = document.querySelector('#contact_capture_form_navigation input[type=submit]')
+        submitButton.parentElement.insertBefore(feedback, submitButton.nextSibling);
+      }
+    </script>
+
+
+    <h3>Contact Capture Form – without Navigation</h3>
+    <div id="contact_capture_ajax"></div>
+    <form
+      id="contact_capture_form_ajax"
+      style="border: 1px solid gray; padding: 0 24px 12px 24px; margin: 24px 0;"
+      onsubmit="
+        const feedback = document.createElement('span');
+        feedback.id = 'ccf_ajax_form_feedback';
+        feedback.style.color = 'green';
+        feedback.style.marginLeft = '1em';
+        feedback.innerHTML = '✅ Collected';
+        const submitButton = event.target.querySelector('input[type=submit]');
+        submitButton.parentElement.insertBefore(feedback, submitButton.nextSibling);
+        return false;
+      "
+    >
+      <p>
+        <label for="name">Name</label>
+        <input type="text" id="ccf_ajax_form_name" name="ccf_ajax_form_name" placeholder="Your name...">
+      </p>
+      <p>
+        <label for="email">Email</label>
+        <input type="email" id="ccf_ajax_form_email" name="ccf_ajax_form_email" placeholder="Your email...">
+      </p>
+      <p>
+        <input type="checkbox" id="ccf_ajax_form_marketing_consent" name="ccf_ajax_form_marketing_consent" />
+        <label for="marketing_consent">I <em>consent</em> to receiving marketing stuff from the CX Text Store</label>
+      </p>
+      <p>
+        <input type="submit">
+        <span id="ccf_ajax_feedback">
+        </span>
+      </p>
+    </form>
+
+
+    <h3>Contact Capture Form – inside a local <code>iframe</code></h3>
+    <iframe
+      id="contact_capture_local_iframe"
+      onload="
+        const contactCaptureForm = document.getElementById('contact_capture_form_ajax');
+        const cloned = contactCaptureForm.cloneNode(true);
+        event.target.contentDocument.body.appendChild(cloned);
+      "
+      src="about:blank"
+      width="100%"
+      height="250px"
+    ></iframe>
+
+
+    <h3>Contact Capture Form – inside a remote <code>iframe</code></h3>
+    <iframe
+      id="contact_capture_remote_iframe"
+      src="contact-capture-form.html"
+      width="100%"
+      height="250px"
+    ></iframe>
+
+  </body>
+
+</html>
